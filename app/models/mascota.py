@@ -3,7 +3,7 @@ from app import db
 class Mascota(db.Model):
     __tablename__ = 'Mascota'
     
-    id_mascota = db.Column(db.Integer, primary_key=True)
+    id_mascota = db.Column(db.Integer, primary_key=True, autoincrement=True)
     nombre = db.Column(db.String(50), nullable=False)
     raza = db.Column(db.String(20), nullable=False)
     peso = db.Column(db.Numeric(5,2), nullable=False)

@@ -3,7 +3,7 @@ from app import db
 class Salud(db.Model):
     __tablename__ = 'Salud'
     
-    id_salud = db.Column(db.Integer, primary_key=True)
+    id_salud = db.Column(db.Integer, primary_key=True, autoincrement=True)
     fecha = db.Column(db.TIMESTAMP, nullable=False)
     observacion = db.Column(db.String(250), nullable=False)
     archivo = db.Column(db.String(100), nullable=False)

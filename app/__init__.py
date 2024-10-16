@@ -12,9 +12,11 @@ def create_app():
     db.init_app(app)
     migrate.init_app(app, db)
 
+#base de datos
     from app.models import (Actividad, Mascota, Salud, Usuario, Especie, Notificacion, TipoActividad, TipoSalud)
 
-    #from app.routes import user_routes  # Importar las rutas
-    #app.register_blueprint(user_routes)
+#rutas
+    from app.routes import register_routes
+    register_routes(app)
 
     return app

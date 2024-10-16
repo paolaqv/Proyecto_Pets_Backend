@@ -3,7 +3,7 @@ from app import db
 class Notificacion(db.Model):
     __tablename__ = 'notificacion'
     
-    id_notificacion = db.Column(db.Integer, primary_key=True)
+    id_notificacion = db.Column(db.Integer, primary_key=True, autoincrement=True)
     mensaje = db.Column(db.String(50), nullable=False)
     fecha_inicio = db.Column(db.TIMESTAMP, nullable=False)
     fecha_fin = db.Column(db.TIMESTAMP, nullable=False)
