@@ -16,6 +16,7 @@ venv\Scripts\activate
 ```sh
 pip install Flask SQLAlchemy Flask-Migrate psycopg2
 ```
+### crear bd en pgAdmin4 sin agregar tablas
 
 ### migraciones de BD
 
