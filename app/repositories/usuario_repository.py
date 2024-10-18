@@ -9,7 +9,7 @@ class UsuarioRepository:
             nombre=data.get('nombre'),
             email=data.get('email'),
             telefono=data.get('telefono'),
-            contrasena=data.get('contrasena')
+            contrasenia=data.get('contrasenia')
         )
         db.session.add(nuevo_usuario)
         db.session.commit()
@@ -26,7 +26,7 @@ class UsuarioRepository:
             usuario.nombre = data.get('nombre')
             usuario.email = data.get('email')
             usuario.telefono = data.get('telefono')
-            usuario.contrasena = data.get('contrasena')
+            usuario.contrasenia = data.get('contrasenia')
             db.session.commit()
         return usuario
 
