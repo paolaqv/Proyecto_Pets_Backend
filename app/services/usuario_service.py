@@ -8,7 +8,9 @@ from flask import current_app
 class UsuarioService:
 
     @staticmethod
-    def login(email, password):
+    def login(email, contrasenia): 
+        print(f"Email recibido: {email}")
+        print(f"Contraseña recibida: {contrasenia}")
         # Busca al usuario por email
         usuario = Usuario.query.filter_by(email=email).first()
 
@@ -16,7 +18,9 @@ class UsuarioService:
             return {"error": "Usuario no encontrado"}, 404
 
         # Verifica la contraseña
-        if not check_password_hash(usuario.contrasenia, password):
+        print(f"Hash en la base de datos: {usuario.contrasenia}")
+        print(f"Contraseña ingresada: {contrasenia}")
+        if not check_password_hash(usuario.contrasenia, contrasenia):  
             return {"error": "Contraseña incorrecta"}, 401
 
         # Generar el token JWT
