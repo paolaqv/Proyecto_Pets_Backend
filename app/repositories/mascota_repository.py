@@ -7,6 +7,7 @@ class MascotaRepository:
     def add_mascota(data):
         nueva_mascota = Mascota(
             nombre=data.get('nombre'),
+            fecha_nacimiento=data.get('fecha_nacimiento'),  # Añadido
             raza=data.get('raza'),
             peso=data.get('peso'),
             sexo=data.get('sexo'),
@@ -28,6 +29,7 @@ class MascotaRepository:
         mascota = Mascota.query.get(mascota_id)
         if mascota:
             mascota.nombre = data.get('nombre')
+            mascota.fecha_nacimiento = data.get('fecha_nacimiento')  # Añadido
             mascota.raza = data.get('raza')
             mascota.peso = data.get('peso')
             mascota.sexo = data.get('sexo')
