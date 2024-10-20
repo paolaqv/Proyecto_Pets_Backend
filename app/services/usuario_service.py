@@ -32,6 +32,7 @@ class UsuarioService:
         # Devuelve el token y el nombre del usuario
         return {
             "message": "Login exitoso", 
+            "id_usuario": usuario.id_usuario,
             "token": token, 
             "nombre": usuario.nombre  # Devuelve el nombre del usuario
         }, 200
