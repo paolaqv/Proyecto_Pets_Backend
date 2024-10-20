@@ -31,3 +31,7 @@ class EspecieRepository:
             db.session.delete(especie)
             db.session.commit()
         return especie
+
+    @staticmethod
+    def get_all_especies():
+        return Especie.query.all()
