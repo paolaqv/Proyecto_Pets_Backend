@@ -29,8 +29,12 @@ class UsuarioService:
             'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=24)
         }, current_app.config['SECRET_KEY'], algorithm='HS256')
 
-        return {"message": "Login exitoso", "token": token}, 200
-
+        # Devuelve el token y el nombre del usuario
+        return {
+            "message": "Login exitoso", 
+            "token": token, 
+            "nombre": usuario.nombre  # Devuelve el nombre del usuario
+        }, 200
     @staticmethod
     def create_usuario(data):
         # Hash de la contraseña antes de almacenarla
