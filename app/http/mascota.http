@@ -1,14 +1,15 @@
 ### Crear una nueva mascota
-POST http://127.0.0.1:5000/mascotas
+POST http://127.0.0.1:5000/mascota/create
 Content-Type: application/json
 
 {
     "nombre": "Bobby",
     "raza": "Golden Retriever",
+    "fecha_nacimiento": "10/10/2023",
     "peso": 30.5,
     "sexo": "Macho",
     "descripcion": "Un perro amistoso",
-    "foto": "url_de_foto.jpg",
+    "foto": "",
     "Usuario_id_usuario": 1,
     "especie_id_especie": 1
 }
