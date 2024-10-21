@@ -35,3 +35,8 @@ class EspecieRepository:
     @staticmethod
     def get_all_especies():
         return Especie.query.all()
+    
+    
+    
+  
+
