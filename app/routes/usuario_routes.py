@@ -53,3 +53,17 @@ def delete_usuario(usuario_id):
     if not usuario_eliminado:
         return jsonify({"error": "Usuario no encontrado"}), 404
     return jsonify({"message": "Usuario eliminado", "usuario": usuario_eliminado.id_usuario})
+
+
+#Cambiar password
+@usuario_bp.route('/cambiar/<int:usuario_id>', methods=['PUT'])
+def cambiar_contrasenia_usuario(usuario_id):
+    data = request.get_json()
+
+    result, status = UsuarioService.update_usuario_password(usuario_id, data)
+
+    
+    return jsonify(result), status
+
+
+
