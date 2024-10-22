@@ -1,0 +1,18 @@
+###Para cambiar la contrasenia
+PUT http://127.0.0.1:5000/usuario/cambiar/1
+Content-Type: application/json
+{
+    "contrasenia_actual": "admin",
+    "nueva_contrasenia": "123"
+}
+
+
+
+###Para cambiar el telefono o nombre del usuario
+PUT http://127.0.0.1:5000/usuario/1
+Content-Type: application/json
+{
+  "nombre": "User actualizado",
+  
+  "telefono": "77777"
+}
