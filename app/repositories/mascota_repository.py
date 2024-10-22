@@ -47,3 +47,8 @@ class MascotaRepository:
             db.session.delete(mascota)
             db.session.commit()
         return mascota
+    
+    #Obtener mascotas registradas por IDusuario
+    @staticmethod
+    def get_mascotas_by_usuario_id(usuario_id):
+        return Mascota.query.filter_by(Usuario_id_usuario=usuario_id).all()

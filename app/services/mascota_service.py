@@ -21,3 +21,7 @@ class MascotaService:
         # Crear la mascota si los datos son válidos
         mascota = MascotaRepository.add_mascota(data)
         return mascota, None
+    
+    @staticmethod
+    def obtener_mascotas_por_usuario(usuario_id):
+        return MascotaRepository.get_mascotas_by_usuario_id(usuario_id)
