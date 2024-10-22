@@ -13,6 +13,8 @@ def create_app():
 
     db.init_app(app)
     migrate.init_app(app, db)
+    
+    
 
 #base de datos
     from app.models import (Actividad, Mascota, Salud, Usuario, Especie, Notificacion, TipoActividad, TipoSalud)
@@ -22,3 +24,4 @@ def create_app():
     register_routes(app)
 
     return app
+
