@@ -26,3 +26,34 @@ def agregar_mascota():
         "Usuario_id_usuario": nueva_mascota.Usuario_id_usuario,
         "especie_id_especie": nueva_mascota.especie_id_especie
     }), 201
+
+# Ruta para obtener las mascotas del usuario logueado
+@mascota_routes.route('/mis-mascotas', methods=['GET'])
+def obtener_mis_mascotas():
+    usuario_id = request.args.get('Usuario_id_usuario')  # Se obtiene desde los query params
+    if not usuario_id:
+        return jsonify({"error": "Usuario_id_usuario no proporcionado"}), 400
+
+    mascotas = MascotaService.obtener_mascotas_por_usuario(usuario_id)
+    
+    if not mascotas:
+        return jsonify({"error": "No se encontraron mascotas para este usuario"}), 404
+
+    mascotas_data = [
+        {
+            "id_mascota": mascota.id_mascota,
+            "nombre": mascota.nombre,
+            "fecha_nacimiento": mascota.fecha_nacimiento,
+            "raza": mascota.raza,
+            "peso": mascota.peso,
+            "sexo": mascota.sexo,
+            "descripcion": mascota.descripcion,
+            "foto": mascota.foto,
+            "Usuario_id_usuario": mascota.Usuario_id_usuario,
+            "especie_id_especie": mascota.especie_id_especie
+        }
+        for mascota in mascotas
+    ]
+    
+    return jsonify(mascotas_data), 200
+
