@@ -31,8 +31,12 @@ def agregar_mascota():
     }), 201
 
 # Ruta para obtener las mascotas de un usuario
-@mascota_routes.route('/mis-mascotas', methods=['GET'])
+@mascota_routes.route('/mis-mascotas', methods=['GET', 'OPTIONS'])
 def obtener_mis_mascotas():
+    if request.method == 'OPTIONS':
+        # Responder a la solicitud preflight de CORS
+        return jsonify({"message": "OK"}), 200
+    
     usuario_id = request.args.get('Usuario_id_usuario')  # Se obtiene desde los query params
 
     # Validar que el ID del usuario se haya proporcionado
@@ -89,7 +93,6 @@ def obtener_perfil_mascota(mascota_id):
         return jsonify({"error": "Error interno del servidor"}), 500
 
 # Ruta para actualizar la información de una mascota existente
-# Ruta para actualizar una mascota
 @mascota_routes.route('/update/<int:mascota_id>', methods=['PUT'])
 def actualizar_mascota(mascota_id):
     data = request.get_json()
