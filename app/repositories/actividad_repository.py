@@ -8,8 +8,8 @@ class ActividadRepository:
         nueva_actividad = Actividad(
             fecha_hora=data.get('fecha_hora'),
             descripcion=data.get('descripcion'),
-            tipo_actividad_id_cita=data.get('tipo_actividad_id_cita'),
-            mascota_id_mascota=data.get('mascota_id_mascota')
+            tipo_actividad_id_cita=data.get('tipo_actividad_id_cita'),  # Asegúrate de pasar el ID correspondiente al tipo "cita médica"
+            Mascota_id_mascota=data.get('Mascota_id_mascota')
         )
         db.session.add(nueva_actividad)
         db.session.commit()

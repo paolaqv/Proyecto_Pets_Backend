@@ -8,20 +8,20 @@ migrate = Migrate()
 
 def create_app():
     app = Flask(__name__)
-    CORS(app)
+
+    # Permitir CORS para todas las rutas y para el origen del frontend
+    CORS(app, origins="http://localhost:5173")
+
     app.config.from_object('app.config.Config')
 
     db.init_app(app)
     migrate.init_app(app, db)
-    
-    
 
-#base de datos
+    # Importa los modelos para las migraciones
     from app.models import (Actividad, Mascota, Salud, Usuario, Especie, Notificacion, TipoActividad, TipoSalud)
 
-#rutas
+    # Registra las rutas
     from app.routes import register_routes
     register_routes(app)
 
     return app
-
