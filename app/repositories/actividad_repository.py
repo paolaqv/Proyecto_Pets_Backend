@@ -37,3 +37,6 @@ class ActividadRepository:
             db.session.delete(actividad)
             db.session.commit()
         return actividad
+    @staticmethod
+    def get_todas1():
+        return Actividad.query.all()
