@@ -74,3 +74,33 @@ def registrar_otra_actividad():
         }), 201
     else:
         return jsonify({"error": "Error al registrar la otra actividad"}), 400
+    
+
+
+@actividad_routes.route('/lista', methods=['GET'])
+def obtener_actividades():
+    try:
+        # Obtener todas las actividades desde el servicio
+        actividades = ActividadService.obtener_todas1()
+        
+        if not actividades:
+            return jsonify({"error": "No se encontraron actividades"}), 404
+
+        # Transformar las actividades para incluir los nombres de mascota y tipo de actividad
+        actividades_data = [
+            {
+                "id_actividad": actividad["id_actividad"],
+                "fecha_hora": actividad["fecha_hora"],
+                "descripcion": actividad["descripcion"],
+                "mascota": actividad["mascota_nombre"],
+                "tipo_actividad": actividad["tipo_actividad_nombre"]
+            }
+            for actividad in actividades
+        ]
+
+        return jsonify(actividades_data), 200
+
+    except Exception as e:
+        # Registrar el error en consola para depuración
+        print(f"Error al obtener actividades: {e}")
+        return jsonify({"error": "Error interno del servidor"}), 500
