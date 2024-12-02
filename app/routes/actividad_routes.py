@@ -120,8 +120,8 @@ def obtener_actividades_calendario():
             {
                 "id": actividad["id_actividad"],  # ID único de la actividad
                 "name": actividad["descripcion"],  # Nombre o descripción de la actividad
-                "date": actividad["fecha_hora"].strftime('%Y-%m-%d'),  # Convierte a formato de fecha YYYY-MM-DD
-                "type": "event",  # Tipo de evento (puedes personalizarlo según tus necesidades)
+                "date": actividad["fecha_hora"].isoformat(),  # Fecha en formato ISO con zona horaria
+                "type": "event",  # Tipo de evento
                 "description": f"{actividad['tipo_actividad_nombre']} - {actividad['mascota_nombre']}"  # Descripción adicional
             }
             for actividad in actividades
@@ -132,5 +132,6 @@ def obtener_actividades_calendario():
     except Exception as e:
         print(f"Error al obtener actividades para evo-calendar: {e}")
         return jsonify({"error": "Error interno del servidor"}), 500
+
 
 
