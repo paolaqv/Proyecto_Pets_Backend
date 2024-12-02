@@ -9,5 +9,6 @@ class Actividad(db.Model):
     tipo_actividad_id_cita = db.Column(db.Integer, db.ForeignKey('tipo_actividad.id_cita'), nullable=False)
     Mascota_id_mascota = db.Column(db.Integer, db.ForeignKey('Mascota.id_mascota'), nullable=False)
     
-    mascota = db.relationship('Mascota', backref='actividades')
-    tipo_actividad = db.relationship('TipoActividad', backref='actividades')
+    # Relaciones con lazy='joined' para cargar automáticamente los datos relacionados
+    mascota = db.relationship('Mascota', backref='actividades', lazy='joined')
+    tipo_actividad = db.relationship('TipoActividad', backref='actividades', lazy='joined')
