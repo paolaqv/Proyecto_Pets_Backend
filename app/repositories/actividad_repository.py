@@ -1,4 +1,5 @@
 from app import db
+from sqlalchemy.orm import joinedload
 from app.models import Actividad
 
 class ActividadRepository:
@@ -37,3 +38,10 @@ class ActividadRepository:
             db.session.delete(actividad)
             db.session.commit()
         return actividad
+    @staticmethod
+    def get_todas1():
+        # Incluye las relaciones con Mascota y TipoActividad
+        return Actividad.query.options(
+            joinedload(Actividad.mascota),  # Carga la relación con Mascota
+            joinedload(Actividad.tipo_actividad)  # Carga la relación con TipoActividad
+        ).all()
