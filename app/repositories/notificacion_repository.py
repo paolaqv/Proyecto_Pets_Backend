@@ -4,36 +4,26 @@ from app.models import Notificacion
 class NotificacionRepository:
 
     @staticmethod
-    def add_notificacion(data):
+    def crear_notificacion(
+        mensaje, fecha_inicio, fecha_fin, intervalo, unidad_intervalo,
+        recordatorio_tipo, recordatorio_cantidad, recordatorio_hora,
+        actividad_id, usuario_id
+    ):
+        print(f"Datos recibidos en repositorio: fecha_fin={fecha_fin}, intervalo={intervalo}, unidad_intervalo={unidad_intervalo}")
+
         nueva_notificacion = Notificacion(
-            mensaje=data.get('mensaje'),
-            fecha_inicio=data.get('fecha_inicio'),
-            fecha_fin=data.get('fecha_fin'),
-            mascota_id_mascota=data.get('mascota_id_mascota')
+            mensaje=mensaje,
+            fecha_inicio=fecha_inicio,
+            fecha_fin=fecha_fin,  # Debe recibir el valor del servicio
+            intervalo=intervalo,  # Debe recibir el valor del servicio
+            unidad_intervalo=unidad_intervalo,  # Debe recibir el valor del servicio
+            recordatorio_tipo=recordatorio_tipo,
+            recordatorio_cantidad=recordatorio_cantidad,
+            recordatorio_hora=recordatorio_hora,
+            Actividad_id_actividad=actividad_id,
+            Usuario_id_usuario=usuario_id
         )
+
         db.session.add(nueva_notificacion)
         db.session.commit()
         return nueva_notificacion
-
-    @staticmethod
-    def get_notificacion_by_id(notificacion_id):
-        return Notificacion.query.get(notificacion_id)
-
-    @staticmethod
-    def update_notificacion(notificacion_id, data):
-        notificacion = Notificacion.query.get(notificacion_id)
-        if notificacion:
-            notificacion.mensaje = data.get('mensaje')
-            notificacion.fecha_inicio = data.get('fecha_inicio')
-            notificacion.fecha_fin = data.get('fecha_fin')
-            notificacion.mascota_id_mascota = data.get('mascota_id_mascota')
-            db.session.commit()
-        return notificacion
-
-    @staticmethod
-    def delete_notificacion(notificacion_id):
-        notificacion = Notificacion.query.get(notificacion_id)
-        if notificacion:
-            db.session.delete(notificacion)
-            db.session.commit()
-        return notificacion

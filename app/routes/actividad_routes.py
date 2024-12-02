@@ -74,3 +74,63 @@ def registrar_otra_actividad():
         }), 201
     else:
         return jsonify({"error": "Error al registrar la otra actividad"}), 400
+    
+
+
+@actividad_routes.route('/lista', methods=['GET'])
+def obtener_actividades():
+    try:
+        # Obtener todas las actividades desde el servicio
+        actividades = ActividadService.obtener_todas1()
+        
+        if not actividades:
+            return jsonify({"error": "No se encontraron actividades"}), 404
+
+        # Transformar las actividades para incluir los nombres de mascota y tipo de actividad
+        actividades_data = [
+            {
+                "id_actividad": actividad["id_actividad"],
+                "fecha_hora": actividad["fecha_hora"],
+                "descripcion": actividad["descripcion"],
+                "mascota": actividad["mascota_nombre"],
+                "tipo_actividad": actividad["tipo_actividad_nombre"]
+            }
+            for actividad in actividades
+        ]
+
+        return jsonify(actividades_data), 200
+
+    except Exception as e:
+        # Registrar el error en consola para depuración
+        print(f"Error al obtener actividades: {e}")
+        return jsonify({"error": "Error interno del servidor"}), 500
+    
+# Ruta para obtener todas la actividades para el calendario
+@actividad_routes.route('/actividades_calendario', methods=['GET'])
+def obtener_actividades_calendario():
+    try:
+        # Obtener las actividades desde el servicio
+        actividades = ActividadService.obtener_todas1()
+
+        if not actividades:
+            return jsonify([]), 200  # Devuelve una lista vacía si no hay actividades
+
+        # Formatear las actividades para el calendario
+        eventos_calendario = [
+            {
+                "id": actividad["id_actividad"],  # ID único de la actividad
+                "name": actividad["descripcion"],  # Nombre o descripción de la actividad
+                "date": actividad["fecha_hora"].strftime('%Y-%m-%d'),  # Convierte a formato de fecha YYYY-MM-DD
+                "type": "event",  # Tipo de evento (puedes personalizarlo según tus necesidades)
+                "description": f"{actividad['tipo_actividad_nombre']} - {actividad['mascota_nombre']}"  # Descripción adicional
+            }
+            for actividad in actividades
+        ]
+
+        return jsonify(eventos_calendario), 200
+
+    except Exception as e:
+        print(f"Error al obtener actividades para evo-calendar: {e}")
+        return jsonify({"error": "Error interno del servidor"}), 500
+
+
