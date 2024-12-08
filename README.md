@@ -40,5 +40,12 @@ flask run
 
 ```
 
+###  Libreria para formatear fecha en actividad (Instalar dentro del entorno virtual)
+```sh
+pip install pytz
+
+```
+
+
 
 
