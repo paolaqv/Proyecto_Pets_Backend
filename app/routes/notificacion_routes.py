@@ -18,9 +18,6 @@ def registrar_notificacion():
             "fecha_fin": nueva_notificacion.fecha_fin.isoformat() if nueva_notificacion.fecha_fin else None,
             "intervalo": nueva_notificacion.intervalo,
             "unidad_intervalo": nueva_notificacion.unidad_intervalo,
-            "recordatorio_tipo": nueva_notificacion.recordatorio_tipo,
-            "recordatorio_cantidad": nueva_notificacion.recordatorio_cantidad,
-            "recordatorio_hora": nueva_notificacion.recordatorio_hora.strftime('%H:%M:%S') if nueva_notificacion.recordatorio_hora else None,
             "Actividad_id_actividad": nueva_notificacion.Actividad_id_actividad,
             "Usuario_id_usuario": nueva_notificacion.Usuario_id_usuario
         }), 201

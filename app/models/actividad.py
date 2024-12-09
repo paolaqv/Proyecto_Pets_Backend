@@ -6,6 +6,7 @@ class Actividad(db.Model):
     id_actividad = db.Column(db.Integer, primary_key=True, autoincrement=True)
     fecha_hora = db.Column(db.TIMESTAMP, nullable=False)
     descripcion = db.Column(db.String(250), nullable=False)
+    estado = db.Column(db.String(20), nullable=False, default='En proceso')  # Nuevo campo
     tipo_actividad_id_cita = db.Column(db.Integer, db.ForeignKey('tipo_actividad.id_cita'), nullable=False)
     Mascota_id_mascota = db.Column(db.Integer, db.ForeignKey('Mascota.id_mascota'), nullable=False)
     
