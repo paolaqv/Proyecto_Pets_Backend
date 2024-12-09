@@ -56,14 +56,22 @@ def delete_usuario(usuario_id):
 
 
 #Cambiar password
-@usuario_bp.route('/cambiar/<int:usuario_id>', methods=['PUT'])
-def cambiar_contrasenia_usuario(usuario_id):
+@usuario_bp.route('/cambiar', methods=['PUT'])
+def cambiar_contrasenia_usuario():
     data = request.get_json()
 
-    result, status = UsuarioService.update_usuario_password(usuario_id, data)
+    # Verificar que se proporcionen email y nueva contraseña
+    email = data.get('email')
+    nueva_contrasenia = data.get('nueva_contrasenia')
 
-    
+    if not email or not nueva_contrasenia:
+        return jsonify({"error": "Faltan datos (email o nueva contraseña)"}), 400
+
+    # Llamar al servicio para actualizar la contraseña
+    result, status = UsuarioService.update_usuario_password(email, data)
+
     return jsonify(result), status
+
 
 
 
