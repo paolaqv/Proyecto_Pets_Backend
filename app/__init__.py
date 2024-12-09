@@ -32,6 +32,8 @@ def create_app():
         initialize_tipo_salud()
 
     register_routes(app)
+    from app.services.scheduler import iniciar_scheduler
+    iniciar_scheduler()
 
     # Ruta para servir archivos
     @app.route('/uploads/<path:filename>')
@@ -70,11 +72,3 @@ def initialize_tipo_salud():
     else:
         print("Categorías ya configuradas.")
 
-def register_routes(app):
-    from app.routes.mascota_routes import mascota_routes
-    from app.routes.salud_routes import salud_routes
-
-    app.register_blueprint(mascota_routes, url_prefix='/mascota')
-    app.register_blueprint(salud_routes, url_prefix='/salud')
-
-    print("Rutas registradas correctamente.")
