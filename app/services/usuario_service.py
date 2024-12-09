@@ -82,29 +82,27 @@ class UsuarioService:
     
     #Para cambiar password
     @staticmethod
-    def update_usuario_password(usuario_id, data):
-        # Obtener el usuario por su ID
-        usuario = Usuario.query.get(usuario_id)
+    def update_usuario_password(email, data):
+        # Obtener el usuario por su email
+        usuario = Usuario.query.filter_by(email=email).first()
 
         if not usuario:
             return {"error": "Usuario no encontrado"}, 404
 
-        # Obtener la contraseña actual y nueva de la solicitud
-        contrasenia_actual = data.get('contrasenia_actual')
+        # Obtener la nueva contraseña de la solicitud
         nueva_contrasenia = data.get('nueva_contrasenia')
 
-        # Verificar que se proporcionaron ambas contraseñas
-        if not contrasenia_actual or not nueva_contrasenia:
-            return {"error": "Faltan contraseñas"}, 400
+        if not nueva_contrasenia:
+            return {"error": "Falta la nueva contraseña"}, 400
 
-        # Verificar la contraseña actual con el hash almacenado en la base de datos
-        if not check_password_hash(usuario.contrasenia, contrasenia_actual):
-            return {"error": "La contraseña actual es incorrecta"}, 401
-
-        # Generar el nuevo hash de la nueva contraseña
+        # Generar el hash de la nueva contraseña
         usuario.contrasenia = generate_password_hash(nueva_contrasenia)
 
-        # Guardar los cambios en la base de datos
-        db.session.commit()
+        try:
+            # Guardar los cambios en la base de datos
+            db.session.commit()
+        except Exception as e:
+            db.session.rollback()
+            return {"error": "Error al actualizar la contraseña. Intenta nuevamente."}, 500
 
         return {"message": "Contraseña actualizada exitosamente"}, 200
