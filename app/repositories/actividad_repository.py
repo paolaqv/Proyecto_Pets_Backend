@@ -63,6 +63,7 @@ class ActividadRepository:
 
         # Ajusta las fechas de cada actividad a la zona horaria deseada
         for actividad in actividades:
+            print(f"Fecha antes de ajuste: {actividad.fecha_hora}")
             actividad.fecha_hora = actividad.fecha_hora.astimezone(zona_horaria)
 
         return actividades

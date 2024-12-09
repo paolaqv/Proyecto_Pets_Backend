@@ -6,7 +6,6 @@ class NotificacionRepository:
     @staticmethod
     def crear_notificacion(
         mensaje, fecha_inicio, fecha_fin, intervalo, unidad_intervalo,
-        recordatorio_tipo, recordatorio_cantidad, recordatorio_hora,
         actividad_id, usuario_id
     ):
         print(f"Datos recibidos en repositorio: fecha_fin={fecha_fin}, intervalo={intervalo}, unidad_intervalo={unidad_intervalo}")
@@ -17,9 +16,6 @@ class NotificacionRepository:
             fecha_fin=fecha_fin,  # Debe recibir el valor del servicio
             intervalo=intervalo,  # Debe recibir el valor del servicio
             unidad_intervalo=unidad_intervalo,  # Debe recibir el valor del servicio
-            recordatorio_tipo=recordatorio_tipo,
-            recordatorio_cantidad=recordatorio_cantidad,
-            recordatorio_hora=recordatorio_hora,
             Actividad_id_actividad=actividad_id,
             Usuario_id_usuario=usuario_id
         )

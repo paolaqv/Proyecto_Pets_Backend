@@ -55,9 +55,6 @@ class NotificacionService:
             fecha_fin=fecha_fin,
             intervalo=intervalo,
             unidad_intervalo=unidad_intervalo,
-            recordatorio_tipo=None,
-            recordatorio_cantidad=None,
-            recordatorio_hora=None,
             actividad_id=actividad_id,
             usuario_id=usuario_id
         )

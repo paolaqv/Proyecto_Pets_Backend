@@ -33,6 +33,7 @@ def agregar_mascota():
 # Ruta para obtener las mascotas de un usuario
 @mascota_routes.route('/mis-mascotas', methods=['GET', 'OPTIONS'])
 def obtener_mis_mascotas():
+    print("Ejecutando obtener_mis_mascotas")
     if request.method == 'OPTIONS':
         # Responder a la solicitud preflight de CORS
         return jsonify({"message": "OK"}), 200
