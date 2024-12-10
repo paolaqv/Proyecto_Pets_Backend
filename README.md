@@ -45,6 +45,12 @@ flask run
 pip install pytz
 
 ```
+###  Librerias necesarias para envio de notificaciones
+```sh
+pip install twilio
+pip install apscheduler
+
+```
 
 
 
