@@ -1,6 +1,11 @@
 # routes/actividad_routes.py
 from flask import Blueprint, request, jsonify
 from app.services.actividad_service import ActividadService
+<<<<<<< HEAD
+=======
+import pytz
+
+>>>>>>> 4461d87857f6305aa6952dff4389989dbc18b883
 
 actividad_routes = Blueprint('actividad_routes', __name__)
 
@@ -109,6 +114,7 @@ def obtener_actividades():
 @actividad_routes.route('/actividades_calendario', methods=['GET'])
 def obtener_actividades_calendario():
     try:
+<<<<<<< HEAD
         # Obtener las actividades desde el servicio
         actividades = ActividadService.obtener_todas1()
 
@@ -126,6 +132,25 @@ def obtener_actividades_calendario():
             }
             for actividad in actividades
         ]
+=======
+        # Configura la zona horaria
+        zona_horaria = pytz.timezone('America/La_Paz')
+        actividades = ActividadService.obtener_todas1()
+
+        if not actividades:
+            return jsonify([]), 200
+
+        eventos_calendario = []
+        for actividad in actividades:
+            fecha_local = actividad["fecha_hora"].astimezone(zona_horaria)  # Ajusta a zona local
+            eventos_calendario.append({
+                "id": actividad["id_actividad"],
+                "name": actividad["descripcion"],
+                "date": fecha_local.strftime('%Y-%m-%dT%H:%M:%S'),  # En formato ISO sin zona horaria explícita
+                "type": "event",
+                "description": f"{actividad['tipo_actividad_nombre']} - {actividad['mascota_nombre']}"
+            })
+>>>>>>> 4461d87857f6305aa6952dff4389989dbc18b883
 
         return jsonify(eventos_calendario), 200
 
