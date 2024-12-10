@@ -15,10 +15,6 @@ class ActividadRepository:
         fecha_hora = data.get('fecha_hora')
         if isinstance(fecha_hora, str):  # Si viene como string, conviértela a datetime
             fecha_hora = datetime.fromisoformat(fecha_hora)
-<<<<<<< HEAD
-        fecha_hora_local = zona_horaria.localize(fecha_hora)
-
-=======
 
         # Si la hora no está incluida, establece una hora predeterminada
         if not fecha_hora.hour and not fecha_hora.minute:
@@ -28,7 +24,6 @@ class ActividadRepository:
         fecha_hora_local = zona_horaria.localize(fecha_hora)
 
         # Crea la nueva actividad
->>>>>>> 4461d87857f6305aa6952dff4389989dbc18b883
         nueva_actividad = Actividad(
             fecha_hora=fecha_hora_local,  # Guarda la fecha ajustada
             descripcion=data.get('descripcion'),
