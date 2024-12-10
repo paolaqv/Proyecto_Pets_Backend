@@ -13,7 +13,7 @@ class ActividadRepository:
 
         # Convierte la fecha y hora proporcionada a la zona horaria deseada
         fecha_hora = data.get('fecha_hora')
-        if isinstance(fecha_hora, str):  # Si viene como string, conviértela a datetime
+        if isinstance(fecha_hora, str):
             fecha_hora = datetime.fromisoformat(fecha_hora)
 
         # Si la hora no está incluida, establece una hora predeterminada
@@ -23,16 +23,22 @@ class ActividadRepository:
         # Ajusta la fecha y hora a la zona horaria de La Paz
         fecha_hora_local = zona_horaria.localize(fecha_hora)
 
+        # Calcula el estado inicial
+        now = datetime.now(zona_horaria)
+        estado = "Pendiente" if fecha_hora_local > now else "Completado"
+
         # Crea la nueva actividad
         nueva_actividad = Actividad(
-            fecha_hora=fecha_hora_local,  # Guarda la fecha ajustada
+            fecha_hora=fecha_hora_local,
             descripcion=data.get('descripcion'),
+            estado=estado,  # Estado inicial
             tipo_actividad_id_cita=data.get('tipo_actividad_id_cita'),
             Mascota_id_mascota=data.get('Mascota_id_mascota')
         )
         db.session.add(nueva_actividad)
         db.session.commit()
         return nueva_actividad
+
 
     @staticmethod
     def get_actividad_by_id(actividad_id):
@@ -59,19 +65,19 @@ class ActividadRepository:
     
     @staticmethod
     def get_todas1():
-        # Configura la zona horaria
         zona_horaria = pytz.timezone('America/La_Paz')
 
         # Incluye las relaciones con Mascota y TipoActividad
         actividades = Actividad.query.options(
             joinedload(Actividad.mascota),  # Carga la relación con Mascota
             joinedload(Actividad.tipo_actividad)  # Carga la relación con TipoActividad
-        ).all()
+        ).filter(Actividad.estado != "Cancelado").all()  # Excluye actividades canceladas
 
         # Ajusta las fechas de cada actividad a la zona horaria deseada
         for actividad in actividades:
-            print(f"Fecha antes de ajuste: {actividad.fecha_hora}")
+            print(f"Fecha antes de ajuste: {actividad.fecha_hora}, Mascota: {actividad.mascota}, Tipo: {actividad.tipo_actividad}")
             actividad.fecha_hora = actividad.fecha_hora.astimezone(zona_horaria)
 
         return actividades
+
 
