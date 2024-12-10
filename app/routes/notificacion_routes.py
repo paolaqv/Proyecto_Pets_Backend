@@ -18,6 +18,7 @@ def registrar_notificacion():
             "fecha_fin": nueva_notificacion.fecha_fin.isoformat() if nueva_notificacion.fecha_fin else None,
             "intervalo": nueva_notificacion.intervalo,
             "unidad_intervalo": nueva_notificacion.unidad_intervalo,
+            "estado": nueva_notificacion.estado,
             "Actividad_id_actividad": nueva_notificacion.Actividad_id_actividad,
             "Usuario_id_usuario": nueva_notificacion.Usuario_id_usuario
         }), 201
@@ -26,3 +27,12 @@ def registrar_notificacion():
     except Exception as e:
         print(f"Error inesperado: {str(e)}")  # Para depuración en la terminal
         return jsonify({"error": "Error inesperado en el servidor."}), 500
+
+
+@notificacion_routes.route('/enviarNotificaciones', methods=['GET'])
+def enviar_notificaciones():
+    try:
+        NotificacionService.enviar_notificaciones_automaticas()
+        return jsonify({"message": "Notificaciones enviadas correctamente."}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
