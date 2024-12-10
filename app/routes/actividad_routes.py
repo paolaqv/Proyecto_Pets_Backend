@@ -1,6 +1,7 @@
 # routes/actividad_routes.py
 from flask import Blueprint, request, jsonify
 from app.services.actividad_service import ActividadService
+from datetime import datetime
 import pytz
 
 
@@ -94,8 +95,9 @@ def obtener_actividades():
                 "id_actividad": actividad["id_actividad"],
                 "fecha_hora": actividad["fecha_hora"],
                 "descripcion": actividad["descripcion"],
-                "mascota": actividad["mascota_nombre"],
-                "tipo_actividad": actividad["tipo_actividad_nombre"]
+                "mascota": actividad["mascota"],  # Accede correctamente
+                "tipo_actividad": actividad["tipo_actividad"],  # Accede correctamente
+                "estado": actividad["estado"]  # Incluye el estado
             }
             for actividad in actividades
         ]
@@ -120,19 +122,43 @@ def obtener_actividades_calendario():
 
         eventos_calendario = []
         for actividad in actividades:
-            fecha_local = actividad["fecha_hora"].astimezone(zona_horaria)  # Ajusta a zona local
+            # Convertir fecha_hora a objeto datetime si es necesario
+            if isinstance(actividad["fecha_hora"], str):
+                fecha_hora = datetime.fromisoformat(actividad["fecha_hora"])
+            else:
+                fecha_hora = actividad["fecha_hora"]
+
+            fecha_local = fecha_hora.astimezone(zona_horaria)  # Ajusta a zona local
+
+            # Agregar evento al calendario
             eventos_calendario.append({
                 "id": actividad["id_actividad"],
                 "name": actividad["descripcion"],
                 "date": fecha_local.strftime('%Y-%m-%dT%H:%M:%S'),  # En formato ISO sin zona horaria explícita
                 "type": "event",
-                "description": f"{actividad['tipo_actividad_nombre']} - {actividad['mascota_nombre']}"
+                "description": f"{actividad['tipo_actividad']} - {actividad['mascota']}"
             })
 
         return jsonify(eventos_calendario), 200
 
     except Exception as e:
         print(f"Error al obtener actividades para evo-calendar: {e}")
+        return jsonify({"error": "Error interno del servidor"}), 500
+
+@actividad_routes.route('/cancelar', methods=['POST'])
+def cancelar_actividad():
+    try:
+        data = request.get_json()
+        actividad_id = data.get('id')  # Asegúrate de que "id" existe en la solicitud
+
+        # Llama al servicio para cancelar la actividad
+        actividad = ActividadService.cancelar_actividad(actividad_id)
+        if actividad:
+            return jsonify({"message": "Actividad cancelada exitosamente"}), 200
+        else:
+            return jsonify({"error": "Actividad no encontrada"}), 404
+    except Exception as e:
+        print(f"Error al cancelar actividad: {e}")  # Imprime el error en consola
         return jsonify({"error": "Error interno del servidor"}), 500
 
 
